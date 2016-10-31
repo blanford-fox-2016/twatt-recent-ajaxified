@@ -27,17 +27,15 @@
       <div id="new" class="tab-pane fade active in">
         <div class="jumbotron">
           <h1>Post a new tweet!</h1>
-          <form action="/tweet" method="post">
             <div class="form-group">
-              <label class="control-label">You tweet</label>
+              <label class="control-label">Your tweet</label>
               <div class="input-group col-sm-12">
-                <textarea rows="3" name="tweet" class="form-control col-sm-12"></textarea>
+                <textarea rows="3" name="tweet" class="form-control col-sm-12" id="newstatus"></textarea>
                 <input-group-btn>
-                  <button id="newbtn" type="submit" class="btn btn-primary">Tweet</button>
+                  <button id="newbtn" type="button" class="btn btn-primary" onclick="newtweet()">Tweet</button>
                 </input-group-btn>
               </div>
             </div>
-          </form>
         </div>
       </div>
       <h3>Home Timeline</h3>
@@ -69,6 +67,17 @@
       xhr.send();
     }
     setInterval(load, 3000);
+
+    function newtweet() {
+      var query = "status=" + document.getElementById('newstatus').value;
+      console.log(query);
+      var xhr = new XMLHttpRequest();
+
+      xhr.open("POST", "http://localhost:3000/api/tweet", true);
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+      xhr.send(query);
+    }
   </script>
 
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>

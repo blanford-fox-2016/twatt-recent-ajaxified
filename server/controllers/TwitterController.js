@@ -19,6 +19,7 @@ module.exports = {
   },
 
   postTweet: (req, res, next) => {
+    console.log(query);
     let value = req.body.tweet;
     let link = `https://api.twitter.com/1.1/statuses/update.json?status=`;
     // res.send(value)
