@@ -5,7 +5,10 @@
     <title>Twatt || the twatt ah twatt ah twatt</title>
   </head>
   <body>
-    
+
+    <input type="text" name="input" id="input_post">
+    <button type="button" name="button" onclick="postdata()">post</button>
+
     <p id='demo'>
 
     </p>
@@ -26,6 +29,15 @@
     xhttp.open("GET", "http://localhost:3000/", true);
     xhttp.send();
 
+    function postdata(){
+      var data = document.getElementById("input_post").value;
+      console.log(data);
+       var params = "status="+ data;
+       var xhttp = new XMLHttpRequest();
+       xhttp.open("POST", "http://localhost:3000/post/", true);
+       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+       xhttp.send(params);
+    }
 
     </script>
   </body>
