@@ -75,6 +75,7 @@
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText)
                 console.log(data)
+                getHome()
                 //append
 //                var innerHtml = document.getElementById("test").innerHTML
 //                document.getElementById("test").innerHTML = newHtml + innerHtml
@@ -89,7 +90,7 @@
 
 
 
-    setInterval(function getHome() {
+    var getHome = setInterval(function() {
         var xhr = new XMLHttpRequest()
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -112,8 +113,11 @@
         }
         xhr.open("GET", "http://localhost:3000/api/home", true)
         xhr.send()
+        console.log("test")
 
     }, 5000)
+
+    getHome()
 
 //ini pakai append
 //var xhr = new XMLHttpRequest()
