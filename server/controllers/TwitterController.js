@@ -17,15 +17,6 @@ module.exports = {
       res.send(data);
     });
   },
-  
-  searchTweet: (req, res, next) => {
-    let link = `https://api.twitter.com/1.1/search/tweets.json?q=${req.query.q}`;
-
-    AuthTwitter.getData(link, (data) => {
-      data = JSON.parse(data).statuses;
-      res.json(data);
-    });
-  },
 
   postTweet: (req, res, next) => {
     let value = req.body.tweet;
