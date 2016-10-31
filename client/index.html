@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+
+<div>
+
+    <div class="container">
+        <h1 class="text-center">Twit AJAS</h1>
+    </div>
+
+    <div id="test">
+
+    </div>
+</div>
+
+<script>
+    var xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var data = JSON.parse(this.responseText)
+            console.log(data)
+
+            html =  '<div class="container ">'
+            for (var i = 0; i < data.length; i++) {
+                html += '<div class="panel panel-default">'
+                    html  += '<div class="panel-heading">'
+                        html += `<h4>${data[i].user.name}</h4>`
+                    html +=  '</div>'
+                    html +=  '<div class="panel-body">'
+                         html += `${data[i].text}`
+                    html += '</div>'
+                html += '</div>'
+            }
+            html += '</div>'
+
+            document.getElementById("test").innerHTML = html
+        }
+    }
+    xhr.open("GET", "http://localhost:3000/api/home", true)
+    xhr.send()
+</script>
+
+</body>
+</html>
