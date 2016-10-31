@@ -55,7 +55,7 @@
 //            'kosong ' +
 //            '</div> ' +
 //            '</div>'
-    var html = ""
+
 
     function newTweet(event) {
         event.preventDefault()
@@ -75,11 +75,12 @@
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText)
                 console.log(data)
-                getHome()
+                param = ""
+                //getHome()
                 //append
 //                var innerHtml = document.getElementById("test").innerHTML
 //                document.getElementById("test").innerHTML = newHtml + innerHtml
-
+                $("input[name='status']").val("")
             }
         }
 
@@ -90,16 +91,17 @@
 
 
 
-    var getHome = setInterval(function() {
+    var getHome = function() {
         var xhr = new XMLHttpRequest()
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText)
                 console.log(data)
 
+                var html = ""
                 for (var i = 0; i < data.length; i++) {
                     html += '<div class="panel panel-default">'
-                    html  += '<div class="panel-heading">'
+                    html += '<div class="panel-heading">'
                     html += `<h4>${data[i].user.name}</h4>`
                     html +=  '</div>'
                     html +=  '<div class="panel-body">'
@@ -113,11 +115,9 @@
         }
         xhr.open("GET", "http://localhost:3000/api/home", true)
         xhr.send()
-        console.log("test")
 
-    }, 5000)
-
-    getHome()
+    }
+    setInterval(getHome, 5000)
 
 //ini pakai append
 //var xhr = new XMLHttpRequest()
