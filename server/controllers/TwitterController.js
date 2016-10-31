@@ -6,7 +6,7 @@ module.exports = {
     let link = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
 
     AuthTwitter.getData(link, (data) => {
-      res.json(JSON.parse(data));
+      res.send(data);
     });
   },
 
@@ -14,7 +14,7 @@ module.exports = {
     let link = 'https://api.twitter.com/1.1/statuses/home_timeline.json';
 
     AuthTwitter.getData(link, (data) => {
-      res.json(JSON.parse(data));
+      res.send(data);
     });
   },
 }

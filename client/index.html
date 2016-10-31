@@ -24,6 +24,41 @@
 
     <!-- TWEET LIST -->
     <div class="container">
+      <ul id="myTabs" class="nav nav-tabs">
+        <li class="active"><a href="#new" data-toggle="tab" aria-expanded="true">New Tweet</a></li>
+        <li><a href="#search" data-toggle="tab" aria-expanded="false">Search</a></li>
+      </ul>
+      <div id="myTabContent" class="tab-content">
+        <div id="new" class="tab-pane fade active in">
+          <div class="jumbotron">
+            <h1>Post a new tweet!</h1>
+            <form action="/tweet" method="post">
+              <div class="form-group">
+                <label class="control-label">You tweet</label>
+                <div class="input-group col-sm-12">
+                  <textarea rows="3" name="tweet" class="form-control col-sm-12"></textarea>
+                  <input-group-btn>
+                    <button id="newbtn" type="submit" class="btn btn-primary">Tweet</button>
+                  </input-group-btn>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div id="search" class="tab-pane fade">
+          <div class="jumbotron">
+            <h1>Search tweets</h1>
+            <form action="/search" method="get">
+              <div class="form-group">
+                <label class="control-label">Your keyword</label>
+                <div class="input-group">
+                  <input type="text" name="q" class="form-control"><span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary">Search</button></span>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       <h3>Home Timeline</h3>
       <!-- SINGLE TWEET -->
       <div id="tweets">
@@ -34,21 +69,28 @@
     <!-- TWEET LIST -->
   </body>
   <script type="text/javascript">
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://127.0.0.1:3000/api/home_timeline');
-    xhr.onreadystatechange = function() {
-      if (xhr.status === 200) {
-        var data = JSON.parse(xhr.responseText);
-        var html = '';
+    function load() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'http://127.0.0.1:3000/api/home_timeline');
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          var data = JSON.parse(xhr.responseText);
+          var html = '';
 
-        for (var i = 0; i < data.length; i++) {
-          html += '<div class="panel panel-primary"><div class="panel-heading"><img class="pull-left" src="'+ data[i].user.profile_image_url +'" alt="" /><h2 class="panel-title">'+ data[i].user.name + ' - ' + data[i].user.screen_name +'</h2><div class="clearfix"></div></div><div class="panel-body" id="test">'+ data[i].text +'</div></div>'
+          for (var i = 0; i < data.length; i++) {
+            html += '<div class="panel panel-primary"><div class="panel-heading"><img class="pull-left" src="'+ data[i].user.profile_image_url +'" alt="" /><h2 class="panel-title">'+ data[i].user.name + ' - ' + data[i].user.screen_name +'</h2><div class="clearfix"></div></div><div class="panel-body" id="test">'+ data[i].text +'</div></div>'
+          }
+          document.getElementById("tweets").innerHTML = html;
+        } else {
+          alert('Request failed. Returned status of' + xhr.status);
         }
-        document.getElementById("tweets").innerHTML = html;
-      } else {
-        alert('Request failed. Returned status of' + xhr.status);
-      }
-    };
-    xhr.send();
+      };
+      xhr.send();
+    }
+    setInterval(load, 1000);
   </script>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="javascripts/bs.js"></script>
 </html>

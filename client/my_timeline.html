@@ -36,17 +36,15 @@
   <script type="text/javascript">
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'http://127.0.0.1:3000/api/my_timeline');
-    xhr.onreadystatechange = function() {
+    xhr.onload = function() {
       if (xhr.status === 200) {
         var data = JSON.parse(xhr.responseText);
         var html = '';
 
         for (var i = 0; i < data.length; i++) {
-          html += '<div class="panel panel-primary"><div class="panel-heading"><img class="pull-left" src="'+ data[i].user.profile_image_url +'" alt="" /><h2 class="panel-title">'+ data[i].user.name + ' - ' + data[i].user.screen_name +'</h2><div class="clearfix"></div></div><div class="panel-body" id="test">'+ data[i].text +'</div></div>';
-          document.getElementById("tweets").appendChild(html);
-
+          html += '<div class="panel panel-primary"><div class="panel-heading"><img class="pull-left" src="'+ data[i].user.profile_image_url +'" alt="" /><h2 class="panel-title">'+ data[i].user.name + ' - ' + data[i].user.screen_name +'</h2><div class="clearfix"></div></div><div class="panel-body" id="test">'+ data[i].text +'</div></div>'
         }
-        // document.getElementById("tweets").innerHTML = html;
+        document.getElementById("tweets").innerHTML = html;
       } else {
         alert('Request failed. Returned status of' + xhr.status);
       }
