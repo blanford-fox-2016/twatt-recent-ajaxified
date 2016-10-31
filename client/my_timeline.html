@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TWATT! Recent</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/paper/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="#" class="navbar-brand">Twatt!</a>
+        </div>
+        <div id="bs-example-navbar-collapse-2" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/">Home</a></li>
+            <li><a href="/my_timeline.html">My Timeline</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- NAVBAR -->
+
+    <!-- TWEET LIST -->
+    <div class="container">
+      <h3>Home Timeline</h3>
+      <!-- SINGLE TWEET -->
+      <div id="tweets">
+        <!-- All tweets data belong here -->
+      </div>
+      <!-- SINGLE TWEET -->
+    </div>
+    <!-- TWEET LIST -->
+  </body>
+  <script type="text/javascript">
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://127.0.0.1:3000/api/my_timeline');
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        var data = JSON.parse(xhr.responseText);
+        var html = '';
+
+        for (var i = 0; i < data.length; i++) {
+          html += '<div class="panel panel-primary"><div class="panel-heading"><img class="pull-left" src="'+ data[i].user.profile_image_url +'" alt="" /><h2 class="panel-title">'+ data[i].user.name + ' - ' + data[i].user.screen_name +'</h2><div class="clearfix"></div></div><div class="panel-body" id="test">'+ data[i].text +'</div></div>'
+        }
+        document.getElementById("tweets").innerHTML = html;
+      } else {
+        alert('Request failed. Returned status of' + xhr.status);
+      }
+    };
+    xhr.send();
+  </script>
+</html>
