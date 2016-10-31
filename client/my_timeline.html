@@ -42,9 +42,11 @@
         var html = '';
 
         for (var i = 0; i < data.length; i++) {
-          html += '<div class="panel panel-primary"><div class="panel-heading"><img class="pull-left" src="'+ data[i].user.profile_image_url +'" alt="" /><h2 class="panel-title">'+ data[i].user.name + ' - ' + data[i].user.screen_name +'</h2><div class="clearfix"></div></div><div class="panel-body" id="test">'+ data[i].text +'</div></div>'
+          html += '<div class="panel panel-primary"><div class="panel-heading"><img class="pull-left" src="'+ data[i].user.profile_image_url +'" alt="" /><h2 class="panel-title">'+ data[i].user.name + ' - ' + data[i].user.screen_name +'</h2><div class="clearfix"></div></div><div class="panel-body" id="test">'+ data[i].text +'</div></div>';
+          document.getElementById("tweets").appendChild(html);
+
         }
-        document.getElementById("tweets").innerHTML = html;
+        // document.getElementById("tweets").innerHTML = html;
       } else {
         alert('Request failed. Returned status of' + xhr.status);
       }
