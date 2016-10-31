@@ -12,6 +12,10 @@ const oauth = require('oauth');
 const app = express();
 const router = express.Router();
 
+// require html
+//const index = require('./views/index.html');
+const path = require('path');
+
 //----------------------------------------------------------
 // Node Modules
 //----------------------------------------------------------
@@ -32,6 +36,10 @@ app.use(cors());
 //app.get('/', index);
 const twitt = require('./controller/controller');
 app.get('/', twitt.homeTimeline)
+// app.get('/',function(req,res){
+//   res.sendFile(path.join(__dirname+'/index.html'));
+//   //__dirname : It will resolve to your project folder.
+// });
 
 
 //----------------------------------------------------------
