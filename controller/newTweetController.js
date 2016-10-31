@@ -1,27 +1,26 @@
-var config = require('../config/config')
+var config = require('../helper/config')
 var Twit = require('twit')
+var viewTimeline = require('../controller/APIController')
 
 module.exports = {
-  addNewTweet: addNewTweet,
-  viewIndex: viewIndex
+  addNewTweet: addNewTweet
 }
 
 var T = new Twit({
   consumer_key: config.consumer_key,
-  consumer_secret: config.consumer_secret,
+  consumer_secret: config.application_secret,
   access_token: config.access_token,
   access_token_secret: config.access_token_secret,
-  timeout_ms: 60*1000,  // optional HTTP request timeout to apply to all requests.
+  timeout_ms: 60*1000,
 })
 
 
 function addNewTweet(req, res, next){
-  T.post('statuses/update', { title: 'twatt-new', status: req.body.input_tweet }, function(err, data, response) {
-    console.log(data)
-    res.redirect('/')
-  })
-}
+  console.log("masuk neh dari server");
+  var input = req.body.input
+  console.log(input);
 
-function viewIndex(req, res, next){
-  res.render('index', {title: 'twatt-new'})
+  T.post('statuses/update', { title: 'Tweet', status: input }, function(err, data, response) {
+    viewTimeline.getTimeline(req, res, next)
+  })
 }

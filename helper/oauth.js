@@ -15,17 +15,17 @@ module.exports = {
   get_data_cb: function (url, callBack){
     oauth.get(
     url,
-    '790753648531734528-g1Ab134lshyHb3AiyWpzDyuGSlEsIuh', //test user token
-    '1ZQfadCF58sZqcx2XsaTEI04GOatSMp5otZVfm4oN3uK0', //test user secret
+    key_data.access_token, //test user token
+    key_data.access_token_secret, //test user secret
     function (e, data, res){
       if (e) console.error(e);
       var show_data = JSON.parse(data)
 
-      for (var i = 0; i < show_data.length; i++) {
-        console.log(`${show_data[i].user.name} - @${show_data[i].user.screen_name}`);
-        console.log(`${show_data[i].text}`);
-        console.log(`--------------------------------`);
-      }
+      // for (var i = 0; i < show_data.length; i++) {
+      //   console.log(`${show_data[i].user.name} - @${show_data[i].user.screen_name}`);
+      //   console.log(`${show_data[i].text}`);
+      //   console.log(`--------------------------------`);
+      // }
       callBack(data)
     });
   }
