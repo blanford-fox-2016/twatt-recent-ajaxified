@@ -32,13 +32,24 @@
           <h2 class="panel-title">username - name</h2>
           <div class="clearfix"></div>
         </div>
-        <div class="panel-body">
-          aksdaskdnas
+        <div class="panel-body" id="test">
+          
         </div>
       </div>
       <!-- SINGLE TWEET -->
     </div>
     <!-- TWEET LIST -->
   </body>
-
+  <script type="text/javascript">
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://127.0.0.1:3000/api/home_timeline');
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        document.getElementById("test").innerHTML = xhr.responseText;
+      } else {
+        alerrt('Request failed. Returned status of' + xhr.status);
+      }
+    };
+    xhr.send();
+  </script>
 </html>
