@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Twatt || the twatt ah twatt ah twatt</title>
+  </head>
+  <body>
+
+    <input type="text" name="input" id="input_post">
+    <button type="button" name="button" onclick="postdata()">post</button>
+
+    <p id='demo'>
+
+    </p>
+    <script type="text/javascript">
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        var obj = JSON.parse(this.responseText)
+        var html = "<ol>";
+        for(var i = 0; i<obj.length; i++){
+          html += `<li>${obj[i].id}, ${obj[i].text}</li>`;
+        }
+        html += "</ol>";
+       document.getElementById("demo").innerHTML = html;
+       console.log(obj);
+      }
+    };
+    xhttp.open("GET", "http://localhost:3000/", true);
+    xhttp.send();
+
+    function postdata(){
+      var data = document.getElementById("input_post").value;
+      console.log(data);
+       var params = "status="+ data;
+       var xhttp = new XMLHttpRequest();
+       xhttp.open("POST", "http://localhost:3000/post/", true);
+       xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+       xhttp.send(params);
+    }
+
+    </script>
+  </body>
+</html>
