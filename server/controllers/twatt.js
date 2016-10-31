@@ -59,6 +59,13 @@ module.exports = {
       // res.json(JSON.parse(data))
       res.render('timeline', {title: "Timeline", timeline:JSON.parse(data)})
     })
+  },
+
+  createStatus: function (req, res) {
+    T.post('statuses/update', { status: req.body.status }, function(err, data, res) {
+
+    })
+    res.redirect('/')
   }
 
 }
