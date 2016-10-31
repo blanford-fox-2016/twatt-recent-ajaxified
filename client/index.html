@@ -26,15 +26,15 @@
     <div class="container">
       <h3>Home Timeline</h3>
       <!-- SINGLE TWEET -->
-      <div class="panel panel-primary">
-        <div class="panel-heading">
+      <div id="tweets" class="panel panel-primary">
+        <!-- <div class="panel-heading">
           <img class="pull-left" src="" alt="" />
           <h2 class="panel-title">username - name</h2>
           <div class="clearfix"></div>
         </div>
         <div class="panel-body" id="test">
-          
-        </div>
+
+        </div> -->
       </div>
       <!-- SINGLE TWEET -->
     </div>
@@ -45,7 +45,14 @@
     xhr.open('GET', 'http://127.0.0.1:3000/api/home_timeline');
     xhr.onload = function() {
       if (xhr.status === 200) {
-        document.getElementById("test").innerHTML = xhr.responseText;
+        var data = JSON.parse(xhr.responseText);
+        var html = '';
+
+        for (var i = 0; i < data.length; i++) {
+          html += '<div class="panel-heading"><img class="pull-left" src="'+ data[i].user.profile_image_url +'" alt="" /><h2 class="panel-title">'+ data[i].user.name + '-' data[i].user.screen_name +'</h2><div class="clearfix"></div></div><div class="panel-body" id="test">'+ data[i].user.text +'</div>'
+        }
+
+        document.getElementById("tweets").innerHTML = html;
       } else {
         alerrt('Request failed. Returned status of' + xhr.status);
       }
