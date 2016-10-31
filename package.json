@@ -1,0 +1,27 @@
+{
+  "name": "twatt-recent-ajaxified",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blanford-fox-2016/twatt-recent-ajaxified.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blanford-fox-2016/twatt-recent-ajaxified/issues"
+  },
+  "homepage": "https://github.com/blanford-fox-2016/twatt-recent-ajaxified#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "oauth": "^0.9.14"
+  }
+}
