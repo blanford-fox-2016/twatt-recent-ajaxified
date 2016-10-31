@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- <link href="/stylesheets/style.css" rel="stylesheet"> -->
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display-->
+          <div class="navbar-header">
+            <button type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="/" class="navbar-brand">Twittarized</a>
+          </div>
+          <!-- Collect the nav links, forms, and other content for toggling-->
+          <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li><a role="button" onclick="loadTimeline()">Timeline</a></li>
+              <li><a role="button" onclick="userMentions()">Mentions</a></li>
+              <li><a role="button" onclick="userTweets()">My Tweet</a></li>
+            </ul>
+              <div class="form-group">
+                <input type="text" placeholder="Search tweet" name="search" class="form-control" id="searchForm">
+                <button class="btn btn-success" onclick="searchTweet()">Search</button>
+              </div>
+
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="container">
+      <div class="jumbotron">
+        <div class="container">
+            <div class="form-group">
+              <h2>New Tweet</h2>
+              <textarea id="exampleTextarea" type="text" rows="3" name="update" placeholder="What`s Happening?" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-info" onclick="postTweet()">Tweet !</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="jumbotron">
+        <div class="container">
+          <div id="tweets">
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+      function loadTimeline() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:3000/api/twatt/timeline');
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+              var data = JSON.parse(xhr.responseText)
+              html ='<h2>Timeline</h2>'
+              for (var i = 0; i < data.length; i++) {
+                html += '<div class="panel panel-info"><div class="panel-heading"><img src='+data[i].user.profile_image_url+' class="pull-left"><h3 > '+data[i].user.name+' - @'+data[i].user.screen_name+' </h3><div class="clearfix"></div></div><div class="panel-body"><p id=tweets> '+data[i].text+'</p></div></div>'
+              }
+              document.getElementById('tweets').innerHTML = html
+          }
+          else {
+              alert('Request failed.  Returned status of ' + xhr.status);
+          }
+        };
+        xhr.send();
+      }
+      function userTweets() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:3000/api/twatt/mytweet');
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+              var data = JSON.parse(xhr.responseText)
+              html ='<h2>Timeline</h2>'
+              for (var i = 0; i < data.length; i++) {
+                html += '<div class="panel panel-info"><div class="panel-heading"><img src='+data[i].user.profile_image_url+' class="pull-left"><h3 > '+data[i].user.name+' - @'+data[i].user.screen_name+' </h3><div class="clearfix"></div></div><div class="panel-body"><p id=tweets> '+data[i].text+'</p></div></div>'
+              }
+              document.getElementById('tweets').innerHTML = html
+          }
+          else {
+              alert('Request failed.  Returned status of ' + xhr.status);
+          }
+        };
+        xhr.send();
+      }
+      function userMentions() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:3000/api/twatt/mentions');
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+              var data = JSON.parse(xhr.responseText)
+              html ='<h2>Timeline</h2>'
+              for (var i = 0; i < data.length; i++) {
+                html += '<div class="panel panel-info"><div class="panel-heading"><img src='+data[i].user.profile_image_url+' class="pull-left"><h3 > '+data[i].user.name+' - @'+data[i].user.screen_name+' </h3><div class="clearfix"></div></div><div class="panel-body"><p id=tweets> '+data[i].text+'</p></div></div>'
+              }
+              document.getElementById('tweets').innerHTML = html
+          }
+          else {
+              alert('Request failed.  Returned status of ' + xhr.status);
+          }
+        };
+        xhr.send();
+      }
+      function postTweet() {
+        var query = "status="+document.getElementById('exampleTextarea').value
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:3000/api/twatt/update', true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        xhr.onreadystatechange = function() {
+          if (xhr.status === 200) {
+            userTweets()
+            document.getElementById('exampleTextarea').innerHTML =""
+          }
+          else {
+              alert('Request failed.  Returned status of ' + xhr.status);
+          }
+        };
+        xhr.send(query);
+      }
+      function searchTweet(){
+        var query = "q="+document.getElementById('searchForm').value
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:3000/api/twatt/search');
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+              var data = JSON.parse(xhr.responseText)
+              console.log(data);
+              html ='<h2>Timeline</h2>'
+              for (var i = 0; i < data.length; i++) {
+                html += '<div class="panel panel-info"><div class="panel-heading"><img src='+data[i].user.profile_image_url+' class="pull-left"><h3 > '+data[i].user.name+' - @'+data[i].user.screen_name+' </h3><div class="clearfix"></div></div><div class="panel-body"><p id=tweets> '+data[i].text+'</p></div></div>'
+              }
+              document.getElementById('tweets').innerHTML = html
+          }
+          else {
+              alert('Request failed.  Returned status of ' + xhr.status);
+          }
+        };
+        xhr.send();
+      }
+
+
+    </script>
+  </body>
+</html>

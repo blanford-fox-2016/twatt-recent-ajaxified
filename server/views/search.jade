@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  .container
+    nav.navbar.navbar-inverse
+      .container-fluid
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/') Twatt
+        // Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(href='http://localhost:3000/') Timeline
+            li
+              a(href='http://localhost:3000/mentions') Mentions
+            li
+              a(href='http://localhost:3000/mytweet') My Tweet
+          form.navbar-form.navbar-left(method='GET' action='http://localhost:3000/search')
+            .form-group
+              input.form-control(type='text', placeholder='Search tweet', name='search')
+            button.btn.btn-default(type='submit') Search
+        // /.navbar-collapse
+      // /.container-fluid
+  .container
+    .jumbotron
+      .container
+        h2 Search Result
+      each key in tweet
+        .panel.panel-info
+          .panel-heading
+            img.pull-left(src='#{key.user.profile_image_url}')
+            h3.panel-title #{key.user.name} - @#{key.user.screen_name}
+            .clearfix
+          .panel-body
+            p #{key.text}
+
+
+
+
+
+  script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous")
