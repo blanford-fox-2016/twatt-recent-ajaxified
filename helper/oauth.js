@@ -15,8 +15,8 @@ module.exports = {
   get_data_cb: function (url, callBack){
     oauth.get(
     url,
-    '326746118-1kgr2KZmfbB3YDcM6ygd17OiZVEXX5dm6wT5IoDw', //test user token
-    '7pg7iCTk1b4DgcGmA0qdJ4R5m0ck9FShh7yc4pG0WjJcR', //test user secret
+    '790753648531734528-g1Ab134lshyHb3AiyWpzDyuGSlEsIuh', //test user token
+    '1ZQfadCF58sZqcx2XsaTEI04GOatSMp5otZVfm4oN3uK0', //test user secret
     function (e, data, res){
       if (e) console.error(e);
       var show_data = JSON.parse(data)

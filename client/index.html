@@ -7,13 +7,26 @@
   <body>
 
     <button type="button" name="button" onclick="loadtweet()">load data</button>
-    <p id="content">content</p>
+    <p id="content">
+      content
+    </p>
     <script type="text/javascript">
       function loadtweet(){
         var xhr = new XMLHttpRequest()
         xhr.onreadystatechange = function () {
           if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-              document.getElementById("content").innerHTML = this.responseText
+              var obj = JSON.parse(this.responseText)
+              console.log(obj);
+              // var obj = [{id: 1, text: "hi"}, {id: 2, text: "Hello"}]
+              html = "<ol>"
+
+              for (var i = 0; i < obj.length; i++) {
+                html += `<li> id: ${obj[i].id}</li> <p>screen_name : @${obj[i].user.screen_name}<br>content : ${obj[i].text}</p>`
+              }
+
+              html += "</ol>"
+
+              document.getElementById("content").innerHTML = html
           }
         };
         xhr.open("GET", "http://localhost:3000/api/timeline", true)
