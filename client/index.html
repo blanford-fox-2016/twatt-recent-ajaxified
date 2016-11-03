@@ -30,15 +30,8 @@
 <div class="container">
 
 
-    <div id="test">
-        <!--<div class="panel panel-default">-->
-            <!--<div class="panel-heading">-->
-                <!--<h4>Kosong</h4>-->
-            <!--</div>-->
-            <!--<div class="panel-body">-->
-                <!--kosong-->
-            <!--</div>-->
-        <!--</div>-->
+    <div id="new">
+
     </div>
 </div>
 
@@ -47,39 +40,16 @@
 
 <script>
 
-//    var html = '<div class="panel panel-default"> ' +
-//            '<div class="panel-heading"> ' +
-//            '<h4>Kosong</h4> ' +
-//            '</div> ' +
-//            '<div class="panel-body">' +
-//            'kosong ' +
-//            '</div> ' +
-//            '</div>'
-
-
     function newTweet(event) {
         event.preventDefault()
         var xhr = new XMLHttpRequest()
         var param = document.getElementsByName("status")[0].value
-
-        var newHtml =   '<div class="panel panel-default"> ' +
-                            '<div class="panel-heading"> ' +
-                                `<h4>Judul</h4> ` +
-                            '</div> ' +
-                            '<div class="panel-body">' +
-                                `${param} ` +
-                            '</div> ' +
-                        '</div>'
 
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 var data = JSON.parse(this.responseText)
                 console.log(data)
                 param = ""
-                //getHome()
-                //append
-//                var innerHtml = document.getElementById("test").innerHTML
-//                document.getElementById("test").innerHTML = newHtml + innerHtml
                 $("input[name='status']").val("")
             }
         }
@@ -88,7 +58,6 @@
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
         xhr.send(`status=${param}`)
     }
-
 
 
     var getHome = function() {
@@ -110,38 +79,14 @@
                     html += '</div>'
                 }
 
-                document.getElementById("test").innerHTML = html
+                document.getElementById("new").innerHTML = html
             }
         }
         xhr.open("GET", "http://localhost:3000/api/home", true)
         xhr.send()
 
     }
-    setInterval(getHome, 5000)
-
-//ini pakai append
-//var xhr = new XMLHttpRequest()
-//xhr.onreadystatechange = function () {
-//    if (this.readyState == 4 && this.status == 200) {
-//        var data = JSON.parse(this.responseText)
-//        console.log(data)
-//
-//        for (var i = 0; i < data.length; i++) {
-//            html += '<div class="panel panel-default">'
-//            html  += '<div class="panel-heading">'
-//            html += `<h4>${data[i].user.name}</h4>`
-//            html +=  '</div>'
-//            html +=  '<div class="panel-body">'
-//            html += `${data[i].text}`
-//            html += '</div>'
-//            html += '</div>'
-//        }
-//
-//        document.getElementById("test").innerHTML = html
-//    }
-//}
-//xhr.open("GET", "http://localhost:3000/api/home", true)
-//xhr.send()
+    setInterval(getHome, 10000)
 
 </script>
 
