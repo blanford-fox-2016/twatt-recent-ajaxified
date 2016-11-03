@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <% include head.ejs %>
+</head>
+<body>
+
+<% include top_menu.ejs %>
+
+<div class="container ">
+    <h1><%= title %></h1>
+
+    <% for (var i = 0; i < timeline.length; i++) { %>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4><%= timeline[i].user.name%></h4>
+        </div>
+
+        <div class="panel-body">
+            <%= timeline[i].text%>
+        </div>
+    </div>
+
+    <% } %>
+</div>
+
+
+<% include scripts.ejs %>
+</body>
+</html>
