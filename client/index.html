@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tweet</title>
+    <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <!-- navbar -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">twatt-recent-ajaxified</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <!-- form -->
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="input_post">Your Tweet: </label>
+          <input type="text" placeholder="input your tweet post" id="input_post" name="input" class="form-control" >
+        </div>
+        <button type="submit" class="btn btn-default" onclick="getData()">Submit</button>
+      </form>
+
+
+      <p id="content">
+        content
+      </p>
+    </div>
+
+    <script type="text/javascript">
+        function getData(){
+          var params = "input=" + document.getElementById("input_post").value;
+          console.log(params);
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "http://localhost:3000/add", true);
+
+          //Send the proper header information along with the request
+          xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                var obj = JSON.parse(this.responseText)
+                console.log(obj);
+                // var obj = [{id: 1, text: "hi"}, {id: 2, text: "Hello"}]
+                html = "<ol class='list-group'>"
+
+                for (var i = 0; i < obj.length; i++) {
+                  html += `<li class="list-group-item"> id: ${obj[i].id}<p>screen_name : @${obj[i].user.screen_name}<br>content : ${obj[i].text}</p></li>`
+                }
+
+                html += "</ol>"
+
+                document.getElementById("content").innerHTML = html;
+            }
+          };
+
+          xhr.send(params);
+        }
+
+        function loaddata(){
+          var a = "http://localhost:3000/api/timeline";
+          var b = "http://localhost:3000/api/home";
+          var xhr = new XMLHttpRequest()
+
+          xhr.onreadystatechange = function () {
+            if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                var obj = JSON.parse(this.responseText)
+                console.log(obj);
+                // var obj = [{id: 1, text: "hi"}, {id: 2, text: "Hello"}]
+                html = "<ol class='list-group'>"
+
+                for (var i = 0; i < obj.length; i++) {
+                  html += `<li class="list-group-item"> id: ${obj[i].id} <p>screen_name : @${obj[i].user.screen_name}<br>content : ${obj[i].text}</p></li>`
+                }
+
+                html += "</ol>"
+
+                document.getElementById("content").innerHTML = html
+            }
+          };
+          xhr.open("GET", a, true)
+          xhr.send()
+          // xhr.setTimeout(loaddata, 1000);
+          // setTimeout(loaddata, 10000)
+      }
+
+      setInterval(loaddata(), 60000*5)
+
+
+      // loaddata()
+    </script>
+  </body>
+</html>
