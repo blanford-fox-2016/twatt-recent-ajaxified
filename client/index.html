@@ -30,12 +30,12 @@
     </nav>
     <div class="container">
       <!-- form -->
-      <form class="form-inline">
+      <form class="form-inline" method="post">
         <div class="form-group">
           <label for="input_post">Your Tweet: </label>
           <input type="text" placeholder="input your tweet post" id="input_post" name="input" class="form-control" >
         </div>
-        <button type="submit" class="btn btn-default" onclick="getData()">Submit</button>
+        <button type="submit" class="btn btn-default" id="new_tweet">Submit</button>
       </form>
 
 
@@ -45,7 +45,8 @@
     </div>
 
     <script type="text/javascript">
-        function getData(){
+      document.getElementById('new_tweet').addEventListener( 'click', function (e){
+          e.preventDefault()
           var params = "input=" + document.getElementById("input_post").value;
           console.log(params);
           var xhr = new XMLHttpRequest();
@@ -72,7 +73,7 @@
           };
 
           xhr.send(params);
-        }
+        })
 
         function loaddata(){
           var a = "http://localhost:3000/api/timeline";
